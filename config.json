@@ -1,0 +1,49 @@
+{
+  "prefix": "!",
+  "botName": "MessengerBot",
+  "admins": ["61590450838972"],
+  "timezone": "Asia/Riyadh",
+  "reconnectDelay": 7000,
+  "maxReconnectAttempts": 15,
+  "logLevel": "info",
+
+  "_comment_proxy": [
+    "PROXY — resolves the 1357004 infrastructure block on cloud servers.",
+    "Facebook blocks datacenter IPs from the Messenger API. Setting a",
+    "residential proxy here routes ALL traffic (HTTP + WebSocket/MQTT)",
+    "through a trusted IP and immediately fixes error 1357004.",
+    "",
+    "Formats supported:",
+    "  http://host:port",
+    "  http://user:password@host:port",
+    "  socks5://user:password@host:port",
+    "",
+    "Recommended residential proxy providers:",
+    "  • Bright Data  — https://brightdata.com/proxy-types/residential",
+    "  • Smartproxy   — https://smartproxy.com/proxies/residential",
+    "  • Oxylabs      — https://oxylabs.io/products/residential-proxy-pool",
+    "",
+    "If running locally (not on a cloud server), leave this null or remove it.",
+    "The library uses this via utils.setProxy() which patches the request module."
+  ],
+  "proxy": null,
+
+  "rateLimiter": {
+    "cooldown": 3,
+    "spamThreshold": 5,
+    "spamWindow": 10,
+    "blacklistDuration": 300
+  },
+  "humanSim": {
+    "enabled": true,
+    "minIntervalMinutes": 8,
+    "maxIntervalMinutes": 25
+  },
+  "sessionGuard": {
+    "checkIntervalMinutes": 12
+  },
+  "response": {
+    "typingDelayMinMs": 600,
+    "typingDelayMaxMs": 2400
+  }
+}

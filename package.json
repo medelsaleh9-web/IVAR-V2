@@ -1,0 +1,20 @@
+{
+  "name": "@workspace/messenger-bot",
+  "version": "1.0.0",
+  "description": "Professional Facebook Messenger Bot",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js"
+  },
+  "dependencies": {
+    "@xaviabot/fca-unofficial": "^1.4.0",
+    "chalk": "^4.1.2",
+    "dotenv": "^16.4.5",
+    "fs-extra": "^11.2.0",
+    "moment-timezone": "^0.5.45"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
