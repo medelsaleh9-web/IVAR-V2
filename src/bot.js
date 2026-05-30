@@ -134,69 +134,16 @@ async function loadCommands() {
 // ─── Appstate Handling ────────────────────────────────────────────────────────
 
 async function readAppState() {
-  let raw;
-
-  // Railway Environment Variable
-  if (process.env.APPSTATE) {
-    try {
-      raw = JSON.parse(process.env.APPSTATE);
-      logger.info("Using APPSTATE from environment variable.");
-    } catch (e) {
-      throw new Error(
-        "APPSTATE environment variable is not valid JSON: " + e.message
-      );
-    }
-  } else {
-    // Fallback to local file
-    if (!(await fs.pathExists(APPSTATE_PATH))) {
-      throw new Error(
-        "appstate.json not found and APPSTATE variable is missing."
-      );
-    }
-
-    try {
-      raw = await fs.readJson(APPSTATE_PATH);
-    } catch (e) {
-      throw new Error("appstate.json is not valid JSON: " + e.message);
-    }
-  }
-
-  if (!Array.isArray(raw) || raw.length === 0) {
-    throw new Error("AppState is empty or not a JSON array.");
-  }
-
-  const seen = new Map();
-  const deduped = [];
-
-  for (const c of raw) {
-    const k = `${c.key}|${c.domain}|${c.path}`;
-    if (!seen.has(k)) {
-      seen.set(k, true);
-      deduped.push(c);
-    }
-  }
-
-  const keys = new Set(deduped.map((c) => c.key));
-  const missing = REQUIRED_COOKIES.filter((k) => !keys.has(k));
-
-  if (missing.length) {
+  if (!(await fs.pathExists(APPSTATE_PATH))) {
     throw new Error(
-      `AppState is missing required cookies: ${missing.join(", ")}`
+      "appstate.json not found. Export your Facebook session cookies and place them here."
     );
   }
 
-  const cUser = deduped.find((c) => c.key === "c_user");
-
-  logger.info(
-    `AppState loaded — account UID: ${
-      cUser ? cUser.value : "unknown"
-    }`
-  );
-
-  logger.info(`Cookie count: ${deduped.length}`);
-
-  return deduped;
-}
+  let raw;
+  try {
+    raw = await fs.readJson(APPSTATE_PATH);
+  } catch (e) {
     throw new Error("appstate.json is not valid JSON: " + e.message);
   }
 
